@@ -1,4 +1,6 @@
-package smarthouseandroid.agent;
+package fr.smarthouseandroid.agent;
+
+import java.beans.PropertyChangeSupport;
 
 import jade.core.Agent;
 import jade.core.behaviours.ParallelBehaviour;
@@ -6,14 +8,16 @@ import jade.util.Logger;
 
 @SuppressWarnings("serial")
 public class SmartAndroidAgent extends Agent implements AgentInterface {
+	public static final String PROPERTY_NAME = "WINDOW";
 	private Logger logger = Logger.getJADELogger(this.getClass().getName());
+	private ParallelBehaviour pbhv;
+	private int lightN;
+	PropertyChangeSupport pcs;
 	
 	protected void setup() {
 
 		// Add initial behaviours
-		ParallelBehaviour pbhv = new ParallelBehaviour();
-		pbhv.addSubBehaviour(new AllumerBehaviour());
-		pbhv.addSubBehaviour(new EteindreBehaviour());
+		pbhv = new ParallelBehaviour();
 		pbhv.addSubBehaviour(new ReceiveMessageBehaviour());
 		
 		addBehaviour(pbhv);
@@ -21,14 +25,22 @@ public class SmartAndroidAgent extends Agent implements AgentInterface {
 	
 	@Override
 	public void allumer(int light) {
-		// TODO Auto-generated method stub
-		
+		lightN = light;
+		pbhv.addSubBehaviour(new AllumerBehaviour());
 	}
 
 	@Override
 	public void eteindre(int light) {
-		// TODO Auto-generated method stub
-		
+		lightN = light;
+		pbhv.addSubBehaviour(new EteindreBehaviour());		
+	}
+
+	public int getLightN() {
+		return lightN;
+	}
+
+	public void setLightN(int lightN) {
+		this.lightN = lightN;
 	}
 	
 }

@@ -1,4 +1,4 @@
-package smarthouseandroid.agent;
+package fr.smarthouseandroid.agent;
 
 public interface AgentInterface {
 	public void allumer(int light);

@@ -1,20 +1,24 @@
-package smarthouseandroid;
+package fr.smarthouseandroid;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import fr.smarthouseandroid.agent.AgentInterface;
+import fr.smarthouseandroid.agent.SmartAndroidAgent;
 import jade.android.MicroRuntimeServiceBinder;
 import jade.util.Logger;
-import smarthouse.smarthouseandroid.R;
-import smarthouseandroid.agent.AgentInterface;
-import smarthouseandroid.agent.SmartAndroidAgent;
+import fr.smarthouseandroid.R;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.app.Activity;
 import android.content.ServiceConnection;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements PropertyChangeListener{
 	private Logger logger = Logger.getJADELogger(this.getClass().getName());
 	
 	private MicroRuntimeServiceBinder microRuntimeServiceBinder;
@@ -108,5 +112,15 @@ public class MainActivity extends Activity {
 	public void setaInterface(AgentInterface aInterface) {
 		this.aInterface = aInterface;
 	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent pce) {
+		if(pce.getPropertyName().equals(SmartAndroidAgent.PROPERTY_NAME)) {
+			doToastWindow();
+		}
+	}
     
+	private void doToastWindow() {
+		Toast.makeText(this, "Une fenêtre est ovuerte !", Toast.LENGTH_LONG).show();
+	}
 }

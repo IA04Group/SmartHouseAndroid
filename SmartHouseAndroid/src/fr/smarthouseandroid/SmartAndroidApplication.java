@@ -1,4 +1,4 @@
-package smarthouseandroid;
+package fr.smarthouseandroid;
 
 import java.util.logging.Level;
 
